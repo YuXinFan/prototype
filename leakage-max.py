@@ -4,7 +4,7 @@ x = Int("x")
 y = Int("y")
 z = Int("z")
 l = Int("l")
-constrain = And(z > x, z > y)
+constrain = And(x >= y, x >= z)
 inputs = [x,y,z]
 
 
@@ -39,12 +39,13 @@ def declassifyValue(s, range, constrain, value):
     s.push()
     s.add(imply(range, constrain, value))
     c = s.check()
+    s.pop()
     if ( c == sat ):
-        return value 
+        return 1
     else:
         print("Verification falied at condition: ", value)
-        return None
-# raw max function
+        return 0
+# original max function
 # def max(x,y,z):
 #     l = x 
 #     if ( l < y ):
@@ -53,7 +54,7 @@ def declassifyValue(s, range, constrain, value):
 #         l = z
 #     return l
 
-# verified max function
+# pyz3 verification version max function
 def max(x,y,z):
     l = x
     c = declassifyBranchCondition(s, inputs, constrain, l < y)
@@ -78,7 +79,4 @@ s.add(x > 0)
 s.add(y > 0)
 s.add(z > 0)
 l = max(x,y,z)
-l = 20
-l = declassifyValue(s, inputs, constrain,l == 20)
-print(l)
 

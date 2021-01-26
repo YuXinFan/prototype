@@ -30,12 +30,6 @@ def declassifyBranchCondition(s, range, constrain, condition):
 
 
 I = IntVector('I', 8)
-# I.append(10)
-# I.append(7)
-# I.append(8)
-# I.append(9)
-# I.append(1)
-# I.append(5)
 n = len(I)
 s = Solver()
 constrain = And(I[1] > I[2],
@@ -46,6 +40,7 @@ constrain = And(I[1] > I[2],
                 I[6] > I[7],
                 I[0] > I[1])
 inputs = [I[i] for i in range(8)]
+
 def partition(s, arr,low,high): 
     i = ( low-1 )         # index of smaller element 
     pivot = arr[high]     # pivot 
@@ -53,11 +48,12 @@ def partition(s, arr,low,high):
     for j in range(low , high): 
         c = declassifyBranchCondition(s, inputs, constrain, arr[j] < pivot)
         if (c == 1):
-            print("Branch to Then")
+            #print("Branch to Then")
             i = i+1 
             arr[i],arr[j] = arr[j],arr[i] 
         elif ( c == -1):
-            print("Branch to Else")
+            #print("Branch to Else")
+            pass
         else:
             print("Verification failed at condition: arr[j] < pivot")
   
